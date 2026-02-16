@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import re
 from src.database import process_and_store_json
 from src.tutor_logic import generate_question, evaluate_answer
 
@@ -42,7 +43,14 @@ if st.button("Get New Question"):
 if "q" in st.session_state:
     st.markdown("---")
     st.markdown("### 📝 Practice Scenario")
-    st.markdown(st.session_state.q)
+    # st.markdown(st.session_state.q)
+    raw_q = st.session_state.q
+
+    # Add spacing before options A-D
+    formatted_q = re.sub(r"\s([A-D]\.)", r"\n\n\1", raw_q)
+
+    st.markdown(formatted_q)
+
     
     user_choice = st.radio("Choose the best option:", ["A", "B", "C", "D"], key="user_choice", index=None)
     
