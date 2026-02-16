@@ -99,6 +99,8 @@ mkdir .streamlit
 echo 'GEMINI_API_KEY = "your_google_ai_studio_api_key"' > .streamlit/secrets.toml
 
 # Run the application
+python -m venv venv
+venv\Scripts\activate
 streamlit run app.py
 
 # App will be available at:
