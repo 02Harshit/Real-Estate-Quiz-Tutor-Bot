@@ -73,9 +73,9 @@ if st.session_state.get("submitted") and "feedback" in st.session_state:
         st.markdown("---")
         # Visual indicator for correct/incorrect
         if feedback["assessment"]["correct"]:
-            st.success(f"### ✅ Correct! Score: {feedback['assessment']['score']}/100")
+            st.success(f"### ✅ Correct!")
         else:
-            st.error(f"### ❌ Incorrect. Score: {feedback['assessment']['score']}/100")
+            st.error(f"### ❌ Incorrect")
         
         # Gap Analysis & Correction
         st.write(f"**Gap Analysis:** {feedback['assessment']['gap_analysis']}")
