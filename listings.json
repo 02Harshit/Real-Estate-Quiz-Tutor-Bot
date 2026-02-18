@@ -43,5 +43,32 @@
     "features": "2 beds, 2 baths, Exposed brick, 1 parking spot.",
     "zoning": "DX-5 (Downtown Mixed-Use)",
     "legal_notes": "Pending litigation on HOA reserves, Right of first refusal applies."
+  },
+  {
+    "id": "RES-707",
+    "address": "82 Mill Creek Road, Asheville, NC",
+    "description": "Mountain contemporary home on a wooded lot. A small stream (tributary to French Broad River) runs through the backyard.",
+    "price": "875,000",
+    "features": "3 beds, 3 baths, 2,200 sqft, Screened porch.",
+    "zoning": "RS-2 (Low Density Residential)",
+    "legal_notes": "Riparian buffer restrictions apply, Army Corps of Engineers jurisdiction possible."
+  },
+  {
+    "id": "LAND-808",
+    "address": "Tract B, Windy Plains, Lubbock, TX",
+    "description": "Agricultural land currently used for cotton farming. Includes a 50-year-old water well and center-pivot irrigation system.",
+    "price": "750,000",
+    "features": "160 acres, Irrigated, Agricultural exemption.",
+    "zoning": "A (Agricultural)",
+    "legal_notes": "Prior water rights adjudication, Groundwater district permit transfer required."
+  },
+  {
+    "id": "RES-111",
+    "address": "9 Dune Road, Southampton, NY",
+    "description": "Oceanfront estate with direct beach access. The property lies within FEMA's VE (Velocity Zone) and has an active dune protection area.",
+    "price": "8,950,000",
+    "features": "6 beds, 5 baths, Pool, Private dune walkover.",
+    "zoning": "R-20 (Residence District)",
+    "legal_notes": "FEMA flood insurance mandatory, Coastal Erosion Hazard Area permit required for any alterations."
   }
 ]
