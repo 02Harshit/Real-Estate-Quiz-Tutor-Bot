@@ -23,19 +23,6 @@ def generate_question(api_key):
     
     TASK: Generate ONE 'Comparative Analysis' MCQ.
     
-    REQUIREMENTS:
-1. Compare AT LEAST TWO properties.
-2. Focus on legal, zoning, disclosure, financing, HOA, tax, or regulatory differences.
-3. The comparison must require analytical reasoning — NOT surface-level facts.
-4. Ensure the correct answer depends on interpreting regulatory or financial nuance.
-5. All distractors (A–D) must be plausible and technically defensible but incorrect.
-6. Avoid obvious giveaway wording.
-7. Mimic real estate licensing exam tone (e.g., scenario-based advisory question).
-
-QUESTION STYLE:
-- Present as a client advisory scenario.
-- The licensee must determine a compliance, disclosure, or due diligence implication.
-    
     INSTRUCTIONS:
     - Compare at least TWO properties on legal/zoning/financial nuances.
     - Provide 4 options (A, B, C, D).
