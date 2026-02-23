@@ -4,3 +4,5 @@ bonus.txt
 /data
 /venv
 src/_pycache__/
+src/__pycache__/database.cpython-311.pyc
+src/__pycache__/tutor_logic.cpython-311.pyc
