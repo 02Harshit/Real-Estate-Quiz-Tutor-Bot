@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 from src.database import process_and_store_json
-from src.tutor_logic import generate_question, evaluate_answer, get_available_question_types
+from src.tutor_logic import generate_question, evaluate_answer
 
 # --- Page Config ---
 st.set_page_config(
