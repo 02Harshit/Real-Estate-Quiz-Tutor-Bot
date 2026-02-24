@@ -219,6 +219,7 @@ with st.sidebar:
         with st.spinner("Processing..."):
             try:
                 data = json.load(uploaded_file)
+                process_and_store_json(data,api_key)
                 # This function needs to be implemented in database.py
                 st.success(f"✓ File uploaded successfully")
             except Exception as e:

@@ -3,6 +3,7 @@ import json
 import random
 import re
 from typing import Optional, Dict, Any, Tuple
+from src.database import query_listings
 
 # 2026 Stable Model Alias
 CURRENT_MODEL = "gemini-2.5-flash"  
@@ -26,92 +27,190 @@ def get_available_question_types() -> Dict[str, Dict[str, Any]]:
         }
     }
 
-def generate_question(api_key: str, question_type: Optional[str] = None) -> Tuple[str, str, str, Dict, str, str]:
+# def generate_question(api_key: str, question_type: Optional[str] = None) -> Tuple[str, str, str, Dict, str, str]:
+#     """
+#     Fetches context and generates either a comparative or calculation-based question.
+#     Always returns a valid question (uses fallback if generation fails).
+#     """
+#     try:
+#         genai.configure(api_key=api_key)
+#         model = genai.GenerativeModel(CURRENT_MODEL)
+        
+#         # If no type specified, randomly choose
+#         if question_type is None:
+#             question_type = random.choice(["comparative", "calculation"])
+        
+#         # Create prompt based on question type
+#         if question_type == "comparative":
+#             prompt = """Create a real estate comparative analysis question with 4 options.
+
+# The question should compare two properties on legal, zoning, or financial differences.
+
+# Format your response EXACTLY like this with these exact headers:
+
+# QUESTION:
+# [Write your question here with clear A, B, C, D options on new lines]
+
+# ANSWER:
+# [Single letter - A, B, C, or D]
+
+# OBJECTIVES:
+# [Learning objectives, comma separated - e.g., Zoning Analysis, Property Rights, Tax Implications]
+
+# Make sure each option starts with A) B) C) D) on separate lines."""
+            
+#         else:  # calculation
+#             prompt = """Create a real estate calculation question with 4 options.
+
+# The question should involve price per square foot, LTV ratio, property tax, or commission calculation.
+
+# Format your response EXACTLY like this with these exact headers:
+
+# QUESTION:
+# [Write your question here with clear A, B, C, D options showing numbers on new lines]
+
+# ANSWER:
+# [Single letter - A, B, C, or D]
+
+# OBJECTIVES:
+# [Learning objectives, comma separated - e.g., Price per Sq Ft, LTV Ratio, Tax Calculation]
+
+# SOLUTION:
+# [Step-by-step calculation showing how to get the answer]
+
+# Make sure each option starts with A) B) C) D) on separate lines."""
+        
+#         response = model.generate_content(prompt)
+        
+#         if response and response.text:
+#             text = response.text
+            
+#             # Extract sections
+#             question = extract_section(text, "QUESTION:", "ANSWER:")
+#             answer = extract_section(text, "ANSWER:", "OBJECTIVES:")
+#             objectives = extract_section(text, "OBJECTIVES:", "SOLUTION:")
+#             solution = extract_section(text, "SOLUTION:", None)
+            
+#             # Clean up
+#             question = question.strip() if question else ""
+#             answer = answer.strip().upper() if answer else "A"
+#             objectives = objectives.strip() if objectives else "Real Estate Fundamentals"
+#             solution = solution.strip() if solution else ""
+            
+#             # Validate answer is a single letter
+#             if answer and len(answer) > 1:
+#                 for letter in ['A', 'B', 'C', 'D']:
+#                     if letter in answer:
+#                         answer = letter
+#                         break
+#                 else:
+#                     answer = 'A'
+            
+#             # Validate question has options
+#             if question and all(opt in question for opt in ['A)', 'B)', 'C)', 'D)']):
+#                 return (question, answer, objectives, {}, solution, question_type)
+        
+#         # If we get here, use fallback
+#         return create_fallback_question(question_type)
+        
+#     except Exception as e:
+#         print(f"Error generating question: {str(e)}")
+#         return create_fallback_question(question_type)
+
+### ----- NEW QUESTION GENERATING FUNCTION WITH RAG ----- ###
+def generate_question(api_key: str, question_type: Optional[str] = None):
     """
-    Fetches context and generates either a comparative or calculation-based question.
-    Always returns a valid question (uses fallback if generation fails).
+    Generates a question using retrieved property context (True RAG).
     """
     try:
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel(CURRENT_MODEL)
-        
-        # If no type specified, randomly choose
+
+        # Retrieve property context from Chroma
+        context = query_listings(
+            query_text="Generate a real estate learning scenario",
+            api_key=api_key,
+            num_results=3
+        )
+
+        if not context:
+            context = "No property data available."
+
+        # Choose question type
         if question_type is None:
             question_type = random.choice(["comparative", "calculation"])
-        
-        # Create prompt based on question type
+
+        # Build RAG prompt
         if question_type == "comparative":
-            prompt = """Create a real estate comparative analysis question with 4 options.
+            prompt = f"""
+You are a real estate tutor.
 
-The question should compare two properties on legal, zoning, or financial differences.
+Use ONLY the following property data to create a comparative analysis question:
 
-Format your response EXACTLY like this with these exact headers:
+{context}
 
-QUESTION:
-[Write your question here with clear A, B, C, D options on new lines]
+Create a real estate comparative analysis question with 4 options.
 
-ANSWER:
-[Single letter - A, B, C, or D]
-
-OBJECTIVES:
-[Learning objectives, comma separated - e.g., Zoning Analysis, Property Rights, Tax Implications]
-
-Make sure each option starts with A) B) C) D) on separate lines."""
-            
-        else:  # calculation
-            prompt = """Create a real estate calculation question with 4 options.
-
-The question should involve price per square foot, LTV ratio, property tax, or commission calculation.
-
-Format your response EXACTLY like this with these exact headers:
+Format EXACTLY like this:
 
 QUESTION:
-[Write your question here with clear A, B, C, D options showing numbers on new lines]
+[Question with A) B) C) D) options]
 
 ANSWER:
-[Single letter - A, B, C, or D]
+[Single letter]
 
 OBJECTIVES:
-[Learning objectives, comma separated - e.g., Price per Sq Ft, LTV Ratio, Tax Calculation]
+[Comma separated learning objectives]
+
+Make sure options start with A) B) C) D)
+"""
+        else:
+            prompt = f"""
+You are a real estate tutor.
+
+Use ONLY the following property data to create a calculation-based question:
+
+{context}
+
+Create a calculation question (price per sq ft, tax, LTV, etc.)
+
+Format EXACTLY like this:
+
+QUESTION:
+[Question with A) B) C) D) options]
+
+ANSWER:
+[Single letter]
+
+OBJECTIVES:
+[Comma separated learning objectives]
 
 SOLUTION:
-[Step-by-step calculation showing how to get the answer]
+[Step-by-step solution]
+"""
 
-Make sure each option starts with A) B) C) D) on separate lines."""
-        
         response = model.generate_content(prompt)
-        
+
         if response and response.text:
+            print("Inside if")
             text = response.text
-            
-            # Extract sections
+
             question = extract_section(text, "QUESTION:", "ANSWER:")
             answer = extract_section(text, "ANSWER:", "OBJECTIVES:")
             objectives = extract_section(text, "OBJECTIVES:", "SOLUTION:")
             solution = extract_section(text, "SOLUTION:", None)
-            
-            # Clean up
+
             question = question.strip() if question else ""
             answer = answer.strip().upper() if answer else "A"
-            objectives = objectives.strip() if objectives else "Real Estate Fundamentals"
+            objectives = objectives.strip() if objectives else ""
             solution = solution.strip() if solution else ""
-            
-            # Validate answer is a single letter
-            if answer and len(answer) > 1:
-                for letter in ['A', 'B', 'C', 'D']:
-                    if letter in answer:
-                        answer = letter
-                        break
-                else:
-                    answer = 'A'
-            
-            # Validate question has options
+
+            print("Retrieved Context:", context)
             if question and all(opt in question for opt in ['A)', 'B)', 'C)', 'D)']):
                 return (question, answer, objectives, {}, solution, question_type)
-        
-        # If we get here, use fallback
+
         return create_fallback_question(question_type)
-        
+
     except Exception as e:
         print(f"Error generating question: {str(e)}")
         return create_fallback_question(question_type)
