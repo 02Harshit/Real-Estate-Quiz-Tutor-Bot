@@ -42,7 +42,7 @@ st.markdown("""
         max-width: 1200px;
     }
     
-    /* Clean Cards - No transparency issues */
+    /* Clean Cards */
     .clean-card {
         background-color: #161b22;
         border: 1px solid #30363d;
@@ -52,31 +52,7 @@ st.markdown("""
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
     
-    .clean-card-blue {
-        background-color: #0d1117;
-        border: 1px solid #1f6feb;
-        border-left: 4px solid #1f6feb;
-    }
-    
-    .clean-card-green {
-        background-color: #0d1117;
-        border: 1px solid #238636;
-        border-left: 4px solid #238636;
-    }
-    
-    .clean-card-red {
-        background-color: #0d1117;
-        border: 1px solid #da3633;
-        border-left: 4px solid #da3633;
-    }
-    
-    .clean-card-amber {
-        background-color: #0d1117;
-        border: 1px solid #9e6a03;
-        border-left: 4px solid #9e6a03;
-    }
-    
-    /* Buttons - Reduced size */
+    /* Buttons */
     .stButton > button {
         background-color: #1f6feb !important;
         color: #ffffff !important;
@@ -86,8 +62,6 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 13px !important;
         transition: all 0.2s ease !important;
-        box-shadow: none !important;
-        width: auto !important;
         min-width: 120px;
     }
     
@@ -95,46 +69,7 @@ st.markdown("""
         background-color: #388bfd !important;
         border-color: #58a6ff !important;
     }
-    
-    .stButton > button:disabled {
-        background-color: #21262d !important;
-        color: #8b949e !important;
-        border-color: #30363d !important;
-        cursor: not-allowed !important;
-    }
-    
-    /* Secondary button style */
-    .btn-secondary > button {
-        background-color: #238636 !important;
-        border-color: #2ea043 !important;
-    }
-    
-    .btn-secondary > button:hover {
-        background-color: #2ea043 !important;
-    }
-    
-    /* Form Inputs - Dark theme */
-    .stTextInput > div > div > input,
-    .stSelectbox > div > div,
-    .stFileUploader > div > button {
-        background-color: #21262d !important;
-        color: #e6edf3 !important;
-        border: 1px solid #30363d !important;
-        border-radius: 6px !important;
-    }
-    
-    .stTextInput > div > div > input:focus,
-    .stSelectbox > div > div:focus {
-        border-color: #1f6feb !important;
-        box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.3) !important;
-    }
-    
-    /* Selectbox dropdown */
-    .stSelectbox > div > div > div {
-        background-color: #21262d !important;
-        color: #e6edf3 !important;
-    }
-    
+
     /* Radio Buttons - Clean dark style */
     .stRadio > div {
         background-color: #161b22;
@@ -142,215 +77,33 @@ st.markdown("""
         border-radius: 8px;
         padding: 16px;
     }
-    
-    .stRadio > label {
-        color: #8b949e !important;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 12px;
-    }
-    
-    .stRadio > div > div {
-        display: flex;
-        gap: 12px;
-    }
-    
-    .stRadio > div > div > label {
-        background-color: #21262d;
-        border: 1px solid #30363d;
-        border-radius: 6px;
-        padding: 10px 20px;
-        color: #c9d1d9 !important;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s;
-        flex: 1;
-        text-align: center;
-        font-size: 13px;
-    }
-    
-    .stRadio > div > div > label:hover {
-        background-color: #30363d;
-        border-color: #8b949e;
-    }
-    
-    /* Selected radio state */
-    .stRadio > div > div > label[data-baseweb="radio"] {
-        background-color: rgba(31, 111, 235, 0.1);
-        border-color: #1f6feb;
-        color: #58a6ff !important;
-    }
-    
+
     /* Sidebar - Solid dark */
-    .css-1d391kg, section[data-testid="stSidebar"] {
+    section[data-testid="stSidebar"] {
         background-color: #161b22 !important;
         border-right: 1px solid #30363d;
     }
-    
-    .css-1d391kg .clean-card {
-        background-color: #0d1117;
-    }
-    
-    /* File uploader */
-    .stFileUploader > div > div {
-        background-color: #21262d !important;
-        border: 2px dashed #30363d !important;
-        border-radius: 8px !important;
-    }
-    
-    .stFileUploader > div > div:hover {
-        border-color: #1f6feb !important;
-        background-color: #161b22 !important;
-    }
-    
-    /* Success/Error/Info messages - Override Streamlit defaults */
-    .stSuccess, .stError, .stInfo, .stWarning {
-        background-color: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-    }
-    
-    .stSuccess > div, .stError > div, .stInfo > div, .stWarning > div {
-        background-color: #161b22 !important;
+
+    /* HEADER & SIDEBAR TOGGLE FIX */
+    /* Make header transparent so it doesn't show a white bar, but keep it functional */
+    header[data-testid="stHeader"] {
+        background-color: rgba(0,0,0,0) !important;
         color: #e6edf3 !important;
-        border: 1px solid #30363d !important;
-        border-radius: 8px !important;
-        padding: 16px !important;
     }
-    
-    /* Specific message colors */
-    .stSuccess > div {
-        border-left: 4px solid #238636 !important;
-    }
-    
-    .stError > div {
-        border-left: 4px solid #da3633 !important;
-    }
-    
-    .stInfo > div {
-        border-left: 4px solid #1f6feb !important;
-    }
-    
-    .stWarning > div {
-        border-left: 4px solid #9e6a03 !important;
-    }
-    
-    /* Spinner */
-    .stSpinner > div {
+
+    /* Style the 'Expand' button (the chevron) specifically */
+    button[data-testid="stBaseButton-headerNoPadding"] {
+        background-color: #161b22 !important;
         color: #58a6ff !important;
+        border: 1px solid #30363d !important;
+        margin-left: 10px !important;
     }
-    
-    /* Chips/Tags */
-    .tag {
-        display: inline-block;
-        background-color: #21262d;
-        border: 1px solid #30363d;
-        border-radius: 20px;
-        padding: 4px 12px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #8b949e;
-        margin: 4px 4px 4px 0;
-    }
-    
-    .tag-blue {
-        background-color: rgba(31, 111, 235, 0.1);
-        border-color: rgba(31, 111, 235, 0.4);
-        color: #58a6ff;
-    }
-    
-    .tag-green {
-        background-color: rgba(35, 134, 54, 0.1);
-        border-color: rgba(35, 134, 54, 0.4);
-        color: #3fb950;
-    }
-    
-    .tag-amber {
-        background-color: rgba(158, 106, 3, 0.1);
-        border-color: rgba(158, 106, 3, 0.4);
-        color: #d29922;
-    }
-    
-    .tag-purple {
-        background-color: rgba(139, 92, 246, 0.1);
-        border-color: rgba(139, 92, 246, 0.4);
-        color: #a78bfa;
-    }
-    
-    /* Status indicators */
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        background-color: #21262d;
-        border: 1px solid #30363d;
-        color: #8b949e;
-    }
-    
-    .status-badge.active {
-        background-color: rgba(35, 134, 54, 0.15);
-        border-color: rgba(35, 134, 54, 0.4);
-        color: #3fb950;
-    }
-    
-    /* Section headers */
-    .section-header {
-        font-size: 14px;
-        font-weight: 600;
-        color: #8b949e;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin: 24px 0 12px 0;
-    }
-    
-    /* Divider */
-    hr {
-        border: none;
-        border-top: 1px solid #30363d;
-        margin: 24px 0;
-    }
-    
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #0d1117;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: #30363d;
-        border-radius: 5px;
-        border: 2px solid #0d1117;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: #484f58;
-    }
-    
-    /* Hide Streamlit branding */
-    #MainMenu, footer, header {
+
+    /* Hide Streamlit Footer and Menu, but NOT the header */
+    #MainMenu, footer {
         visibility: hidden;
     }
-    
-    /* Question text formatting */
-    .question-text p {
-        line-height: 1.6;
-        margin: 8px 0;
-        color: #c9d1d9;
-    }
-    
-    .question-text strong {
-        color: #ffffff;
-        font-weight: 600;
-    }
-    
+
     /* Metric cards */
     .metric-box {
         background-color: #161b22;
@@ -373,24 +126,20 @@ st.markdown("""
         letter-spacing: 0.5px;
         margin-top: 4px;
     }
-    
-    /* Fix for HTML escaping issues */
-    .stMarkdown code {
-        color: #ff7b72 !important;
-        background-color: rgba(255, 123, 114, 0.1) !important;
-        padding: 2px 6px !important;
-        border-radius: 4px !important;
-        font-family: 'SF Mono', Monaco, monospace !important;
+
+    /* Tags/Chips */
+    .tag {
+        display: inline-block;
+        background-color: #21262d;
+        border: 1px solid #30363d;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #8b949e;
+        margin: 4px 4px 4px 0;
     }
-    
-    /* Remove empty div artifacts */
-    .element-container:empty,
-    .stMarkdown:empty {
-        display: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        height: 0 !important;
-    }
+    .tag-blue { color: #58a6ff; background-color: rgba(31, 111, 235, 0.1); }
 </style>
 """, unsafe_allow_html=True)
 
